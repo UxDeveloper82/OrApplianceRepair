@@ -1,0 +1,70 @@
+﻿@model Post
+
+@{
+    ViewBag.Title = "Model.Title";
+    ViewBag.Description = "Model.Description";
+    ViewBag.Keywords = $"{Model.Tags?.Replace(",","")}{Model.Category}";
+}
+
+@*
+    <h2>@Model.Title</h2>
+    @if (!String.IsNullOrEmpty(Model.Image))
+    {
+        var image_path = $"/Image/{Model.Image}";
+        <img src="@image_path" width:"500"/>
+    }
+    <p>@Model.Body</p>
+*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="card-my-4 mt-5">
+                Best Appliances Repair & install Detail Page
+                <br><small>Blogs for  @DateTime.Now.Year</small>
+            </h1>
+            <hr />
+            @if (!String.IsNullOrEmpty(Model.Image))
+                         {
+                                    var image_path = $"/Image/{Model.Image}";
+            <img style="width:100%" class="img-thumbnail" src="@image_path" />
+
+                         }
+
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">@Model.Title</h1>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-black-50">@Model.Description</h5>
+                    <div class="card-text">
+                        @Html.Raw(Model.Body)
+                    </div>
+                    <a class="btn btn-outline-primary" asp-controller="Post" asp-action="Index">Back to list</a>
+                </div>
+                <div class="card-footer">
+                    @Model.Created
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+@section Scripts {
+    <script>
+                var disqus_config = function () {
+                    this.page.url = "http://orlandoappliancerepair.tech/Posts/Details/"+@Model.Id;  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = @Model.Id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                (function () { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://blogposts-1.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+    </script>
+}
+
+
